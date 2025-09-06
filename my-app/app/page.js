@@ -22,8 +22,9 @@ export default function Home() {
           </div>
         </main>
       <>
-      {/* Your content */}
+      {/* Footer */}
       <Footer />
+      {/* Footer */}
     </>  
     
     </div>
