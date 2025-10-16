@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/navbar';
 import ProductCard, { MovingCardsSection } from './components/productcard';
 import Footer from "./components/footer";
+import { useCart } from './context/CartContext';
 
 // Featured products with color variations
 const featuredProducts = [
@@ -101,15 +102,15 @@ const carouselProducts = [
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   const handleAddToCart = (product) => {
+    addToCart(product);
     console.log('Added to cart:', product);
-    // Add your cart logic here
-    // For example: addToCart(product);
   };
 
   if (!isMounted) {

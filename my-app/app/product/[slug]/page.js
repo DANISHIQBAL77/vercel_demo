@@ -3,6 +3,7 @@ import Navbar from '../../components/navbar';
 import Footer from '../../components/footer';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useCart } from '../../context/CartContext';
 
 // Import your products data (you should move this to a separate file)
 const allProducts = [
@@ -100,9 +101,24 @@ const allProducts = [
   },
 ];
 
+const handleAddToCart = () => {
+  console.log('Adding to cart - clicked once');
+  console.log('Product:', product.name);
+  console.log('Color:', selectedColor?.name);
+  console.log('Size:', selectedSize);
+  console.log('Quantity:', quantity);
+  
+  addToCart({
+    ...product,
+    selectedColor,
+    selectedSize,
+    quantity
+  });
+};
 export default function ProductPage() {
   const params = useParams();
   const router = useRouter();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -136,21 +152,18 @@ export default function ProductPage() {
   const currentImage = selectedColor?.image || product.image;
 
   const handleAddToCart = () => {
-    console.log('Added to cart:', {
+    addToCart({
       ...product,
       selectedColor,
       selectedSize,
       quantity
     });
-    // Add your cart logic here
-    alert('Product added to cart!');
   };
 
   return (
   <div>
     <Navbar/>
     <div className="min-h-screen bg-black mx-8 rounded-lg border border-gray-800 p-6">
-      
       
       <main className="max-w-7xl mx-auto px-4 py-8">
 
@@ -248,7 +261,7 @@ export default function ProductPage() {
             {/* Add to Cart Button */}
             <button 
               onClick={handleAddToCart}
-              className="w-full bg-blue-700 text-white font-bold py-5 mt-7 px-8 rounded-4xl text-xl"
+              className="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-5 mt-7 px-8 rounded-4xl text-xl transition-colors"
             >
               Add to Cart
             </button>
